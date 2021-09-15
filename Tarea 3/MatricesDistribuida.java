@@ -7,7 +7,7 @@ import java.net.Socket;
 class MatricesDistribuida {
 
     static Object obj = new Object();
-    static int N = 10;
+    static int N = 1500;
     static long[][] A = new long[N][N];
     static long[][] B = new long[N][N];
     static long[][] C = new long[N][N];
