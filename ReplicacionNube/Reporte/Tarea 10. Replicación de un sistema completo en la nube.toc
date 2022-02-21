@@ -1,0 +1,21 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Introducción}{2}{section.1}%
+\contentsline {section}{\numberline {2}Desarrollo}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Creación de la maquina virtual 0 (Sistema principal)}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Creación de la maquina virtual 1 (Sistema replica)}{7}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Conexión SSH con el sistema principal de manera exitosa}{12}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Utilizando el programa sftp enviar a la máquina virtual 0 (sistema principal) el archivo: SimpleProxyServer.java}{12}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Compilar en la máquina virtual 0 (sistema principal) el programa SimpleProxyServer.java}{13}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Iniciar Tomcat en las máquinas virtuales 0 y 1 (sistema principal y sistema replica).}{14}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Ejecutar el máquina virtual 1 el proxy: sudo java SimpleProxyServer ip-maquina-virtual-2 8080 80 8080 \&}{15}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}Ingresar la siguiente URL en un navegador, notar que no es necesario ingresar el nombre del puerto, ya que se utiliza el puerto default 80:}{16}{subsection.2.8}%
+\contentsline {subsection}{\numberline {2.9}Dar clic en el botón ``Alta usuario'' para dar de alta un nuevo usuario. Capturar los campos y dar clic en el botón ``Alta''.}{17}{subsection.2.9}%
+\contentsline {subsection}{\numberline {2.10}Mostrar los registros insertados en la base de datos en la maquina virtual principal y la réplica (no desplegar el contenido del campo foto).}{19}{subsection.2.10}%
+\contentsline {subsection}{\numberline {2.11}Dar clic en el botón ``Consulta usuario'' para consultar el usuario dado de alta en el paso 5. Capturar el email y dar clic en el botón ``Consulta''.}{21}{subsection.2.11}%
+\contentsline {subsection}{\numberline {2.12}Modificar algún dato del usuario y dar clic en el botón ``Modifica''.}{21}{subsection.2.12}%
+\contentsline {subsection}{\numberline {2.13}Mostrar los registros modificados en la base de datos en la maquina virtual principal y la réplica.}{23}{subsection.2.13}%
+\contentsline {subsection}{\numberline {2.14}Consultar el usuario modificado, para verificar que la modificación se realizó.}{24}{subsection.2.14}%
+\contentsline {subsection}{\numberline {2.15}Dar clic en el botón ``Borra usuario'' para borrar el usuario.}{25}{subsection.2.15}%
+\contentsline {subsection}{\numberline {2.16}Mostrar los registros insertados en la base de datos en la maquina virtual principal y la réplica.}{27}{subsection.2.16}%
+\contentsline {subsection}{\numberline {2.17}Capturar el email del usuario borrado y dar clic en el botón ``Consulta''.}{28}{subsection.2.17}%
+\contentsline {section}{\numberline {3}Conclusiones}{29}{section.3}%

@@ -1,0 +1,31 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Introducción}{3}{section.1}%
+\contentsline {section}{\numberline {2}Desarrollo}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Creación de la maquina virtual para el servidor}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Creación de la maquina virtual para el cliente 1}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Creación de la maquina virtual para el cliente 2}{11}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Conexión SSH con el servidor, cliente 1 y cliente 2 de manera exitosa}{15}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Instalación de paquetes a utilizar en el servidor}{17}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Instalación de paquetes a utilizar en el cliente 1}{18}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Instalación de paquetes a utilizar en el cliente 2}{20}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}Punto de montaje en el servidor}{21}{subsection.2.8}%
+\contentsline {subsection}{\numberline {2.9}Punto de montaje en el cliente 1}{23}{subsection.2.9}%
+\contentsline {subsection}{\numberline {2.10}Punto de montaje en el cliente 2}{25}{subsection.2.10}%
+\contentsline {subsection}{\numberline {2.11}Creación del archivo de texto con nombre ``archivo.txt'' en el directorio /cliente con el contenido ``esta es una prueba de NFS'' en el cliente 1}{26}{subsection.2.11}%
+\contentsline {subsection}{\numberline {2.12}Desplegado del contenido del archivo cliente/archivo.txt usando ``more'' en el cliente 2}{27}{subsection.2.12}%
+\contentsline {subsection}{\numberline {2.13}Configuración necesaria para que inicie NFS al momento de encender la computadora}{28}{subsection.2.13}%
+\contentsline {subsubsection}{\numberline {2.13.1}Preparación del cliente 1 antes de crear y usar los demonios}{29}{subsubsection.2.13.1}%
+\contentsline {subsubsection}{\numberline {2.13.2}Preparación del cliente 2 antes de crear y usar los demonios}{30}{subsubsection.2.13.2}%
+\contentsline {subsubsection}{\numberline {2.13.3}Comprobación de que las llaves se copiaron al servidor correctamente }{32}{subsubsection.2.13.3}%
+\contentsline {subsubsection}{\numberline {2.13.4}Creación de los demonios en el cliente 1 }{32}{subsubsection.2.13.4}%
+\contentsline {subsubsection}{\numberline {2.13.5}Creación de los demonios en el cliente 2 }{35}{subsubsection.2.13.5}%
+\contentsline {subsection}{\numberline {2.14}Configuración de los demonios para iniciar en el boot del sistema (ambos clientes)}{37}{subsection.2.14}%
+\contentsline {subsection}{\numberline {2.15}En el cliente 1 desplegar el archivo /cliente/archivo.txt utilizando el comando ``more''}{38}{subsection.2.15}%
+\contentsline {subsection}{\numberline {2.16}En el cliente 2 desplegar el archivo /cliente/archivo.txt utilizando el comando ``more''}{39}{subsection.2.16}%
+\contentsline {subsection}{\numberline {2.17}En el cliente 2 modificar el archivo /cliente/archivo.txt, agregar al archivo el siguiente texto: ``estamos agregando texto al archivo''}{40}{subsection.2.17}%
+\contentsline {subsection}{\numberline {2.18}En el cliente 1 desplegar el archivo /cliente/archivo.txt utilizando el comando ``more''}{41}{subsection.2.18}%
+\contentsline {subsection}{\numberline {2.19}En el cliente 1 eliminar el archivo /cliente/archivo.txt utilizando el comando ``rm'' y desplegado del contenido del directorio /cliente utilizando el comando ``ls''}{42}{subsection.2.19}%
+\contentsline {subsection}{\numberline {2.20}En el cliente 2 desplegar el contenido del directorio /cliente utilizando el comando ``ls''}{43}{subsection.2.20}%
+\contentsline {section}{\numberline {3}Extras}{44}{section.3}%
+\contentsline {section}{\numberline {4}Conclusiones}{46}{section.4}%
+\contentsline {section}{Referencias}{46}{section*.61}%

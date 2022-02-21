@@ -1,0 +1,16 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Introducción}{2}{section.1}%
+\contentsline {section}{\numberline {2}Desarrollo}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Creación de la maquinas virtuales (nodo 0 y 1)}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Creación de la maquina virtual (nodo 3) y creación la base de datos ``servicio\_web'' y el usuario ``hugo'' en MySQL}{9}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Configuración del servicio web en las dos primeras máquinas virtuales para que cada servicio web se conecte a MySQL que ejecuta en la tercera máquina virtual}{13}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Utilizar la aplicación web prueba.html para probar que el servicio web en cada máquina virtual tenga acceso a la base de datos en MySQL.}{17}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Quitar la IP pública a las máquinas virtuales dónde ejecuta Tomcat}{21}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Creación de un balanceador de carga y conexión a las máquinas virtuales creadas en el paso 1}{22}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}Creación de un balanceador de carga en Azure}{22}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}Configuración del balanceador de carga}{26}{subsubsection.2.6.2}%
+\contentsline {subsubsection}{\numberline {2.6.3}Agregar un sondeo de estado}{29}{subsubsection.2.6.3}%
+\contentsline {subsubsection}{\numberline {2.6.4}Agregar una regla de equilibrio de carga}{31}{subsubsection.2.6.4}%
+\contentsline {subsection}{\numberline {2.7}Pruebas}{33}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Conclusiones}{51}{section.3}%
+\contentsline {section}{Referencias}{52}{section*.74}%

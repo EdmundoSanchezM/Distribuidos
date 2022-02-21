@@ -1,0 +1,14 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Introducción}{2}{section.1}%
+\contentsline {section}{\numberline {2}Desarrollo}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Creación de la maquina virtual}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Cambios hechos en Servicio.java y Usuario.java}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Preparación del entorno tanto en servidor como en el cliente}{12}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Pruebas}{15}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Prueba 1}{15}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Prueba 2, 3 y 4}{16}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}Prueba 5}{18}{subsubsection.2.4.3}%
+\contentsline {subsubsection}{\numberline {2.4.4}Prueba 6}{18}{subsubsection.2.4.4}%
+\contentsline {subsubsection}{\numberline {2.4.5}Finalizar programa cliente}{19}{subsubsection.2.4.5}%
+\contentsline {subsection}{\numberline {2.5}Creación de una imagen de la maquina virtual conservando el usuario}{20}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Conclusiones}{22}{section.3}%

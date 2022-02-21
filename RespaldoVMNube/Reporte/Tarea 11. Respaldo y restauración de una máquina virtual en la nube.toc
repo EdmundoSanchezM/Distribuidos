@@ -1,0 +1,10 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Introducción}{2}{section.1}%
+\contentsline {section}{\numberline {2}Desarrollo}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Creación de la maquina virtual}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Habilitar el respaldo de la máquina virtual}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Iniciar un respaldo completo}{7}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Restaurar la máquina virtual}{10}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Creación de la cuenta de almacenamiento }{12}{subsubsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.5}Eliminar el proceso de respaldo}{19}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Conclusiones}{23}{section.3}%

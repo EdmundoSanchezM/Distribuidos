@@ -1,0 +1,539 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="author" content="Sanchez Mendez Edmundo Josue, Noviembre 2021">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>EJ-Shop</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+		integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+	<style>
+		#nav-toggle-state {
+			display: none;
+		}
+
+		#nav-toggle-state:checked~.nav-menu {
+			display: block;
+		}
+
+		.navbar-item:hover {
+			background-color: rgb(36, 86, 167) !important;
+		}
+	</style>
+	<script>
+		var foto = null;  // por default la foto es nula
+		function get(id) {
+			return document.getElementById(id);
+		}
+		function muestra(elemento) {
+			elemento.style.display = "block";
+		}
+
+		function oculta(elemento) {
+			elemento.style.display = "none";
+		}
+		function limpia_pantalla(elementos) {
+			for (let i = 0; i <= elementos.length - 1; i++) {
+				var elemento = get(elementos[i]);
+				elemento.style.display = "none";
+			}
+		}
+		function muestra_pantalla(elemento) {
+			oculta(get("menu"));
+			muestra(elemento);
+		}
+		function quitarStyle(elemento) {
+			elemento.removeAttribute("style")
+		}
+
+		function oculta_pantalla(elemento) {
+			oculta(elemento);
+			muestra(get("menu"));
+		}
+		function readSingleFile(files, imagen) {
+			var file = files[0];
+			if (!file) return;
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				imagen.src = reader.result;
+				// reader.result incluye al principio: "data:image/jpeg;base64,"
+				foto = reader.result.split(',')[1];
+				console.log(foto)
+			};
+			get("name_product").innerHTML = files[0].name;
+			reader.readAsDataURL(file);
+		}
+		function limpia_alta() {
+			get("alta_nombre").value = "";
+			get("alta_descripcion").value = "";
+			get("alta_precio").value = "";
+			get("cantidad_almacen").value = "";
+			get("alta_UPC").value = "";
+			get("alta_imagen").src = "/nofoto.jpg";
+			get("name_product").innerHTML = "Escoger imagen del producto";
+			foto = null;
+		}
+		function alta() {
+			var cliente = new WSClient("/Servicio/rest/ws");
+			// da de alta el articulo, si el email ya existe regresa error
+			cliente.post("alta_articulo",
+				{
+					articulo:
+					{
+						nombre: get("alta_nombre").value,
+						descripcion: get("alta_descripcion").value,
+						UPC: get("alta_UPC").value,
+						precio: get("alta_precio").value,
+						cantidad: get("cantidad_almacen").value,
+						foto: foto
+					}
+				},
+				function (code, result) {
+					if (code == 200) {
+						Swal.fire("Artículo dado de alta correctamente", "", "success");
+						limpia_alta();
+					} else {
+						var error_json = JSON.parse(JSON.stringify(result));
+						Swal.fire(error_json.message, "Verifique si el UPC ingresado es el correcto", "error");
+					}
+				});
+		}
+		function crear_articulos_from_json(objJSON) {
+			let div_inicio = document.getElementById("menu");
+			div_inicio.innerHTML = "";
+			let entre = false;
+			objJSON.forEach((item) => {
+				entre = true;
+				let div_colum = document.createElement("div");
+				div_colum.classList.add("column");
+				div_colum.classList.add("is-4-desktop");
+				div_colum.classList.add("is-half-tablet");
+				div_colum.style.cssText = 'background-color: #6f9de6;'
+				let div_card = document.createElement("div");
+				div_card.classList.add("card");
+				div_card.style.cssText = 'background-color: #adc7f1;'
+				let div_card_img = document.createElement("div");
+				div_card_img.classList.add("card-image");
+				let figure_img = document.createElement("figure");
+				figure_img.classList.add("image");
+				figure_img.classList.add("is-128x128");
+				let img = document.createElement("img");
+				foto = item.foto;
+				if (typeof foto !== 'undefined') {
+					img.src = "data:image/jpeg;base64," + foto;
+				} else
+					img.src = "/nofoto.jpg";
+				let div_card_content = document.createElement("div");
+				div_card_content.classList.add("card-content");
+				let div_card_media = document.createElement("div");
+				div_card_media.classList.add("media");
+				let div_card_media_content = document.createElement("div");
+				div_card_media_content.classList.add("media-content");
+				let nombre_articulo = document.createElement("p");
+				nombre_articulo.classList.add("title");
+				nombre_articulo.classList.add("is-4");
+				let text_articulo = document.createTextNode(item.nombre);
+				let precio_articulo = document.createElement("p");
+				precio_articulo.classList.add("subtitle");
+				precio_articulo.classList.add("is-6");
+				let text_precio = document.createTextNode("Precio: $" + item.precio + " mxn.");
+				let content = document.createElement("div");
+				content.classList.add("content");
+				let descripcion_art = document.createTextNode(" Decripción: " + item.descripcion);
+				let descripcion_art_p = document.createElement("p");
+				let divbutton = document.createElement("div");
+				divbutton.classList.add("buttons");
+				let button = document.createElement("button");
+				button.classList.add("button");
+				button.classList.add("is-success");
+				button.textContent = "Comprar";
+				button.onclick = function () {
+					var cliente = new WSClient("/Servicio/rest/ws");
+					cliente.post("comprar_articulo",
+						{
+							// se debe pasar como parametro el email del usuario a consultar
+							// si el usuario no existe regresa un error
+							UPC: item.UPC,
+							cantidad: get("cantidad_compra" + item.UPC).value
+						},
+						function (code, result) {
+							if (code == 200) {
+								Swal.fire("Artículo comprado correctamente", "", "success");
+							}
+							else {
+								var error_json = JSON.parse(JSON.stringify(result));
+								Swal.fire(error_json.message, "", "error");
+							}
+						});
+					consulta_todo()
+				};
+				let inputCantidad = document.createElement("input");
+				inputCantidad.classList.add("input");
+				inputCantidad.type = "number";
+				inputCantidad.value = 1;
+				inputCantidad.placeholder = "Ingrese la cantidad a comprar";
+				inputCantidad.id = "cantidad_compra" + item.UPC;
+				let div_control_input = document.createElement("div");
+				div_control_input.classList.add("control");
+				let div_input = document.createElement("div");
+				div_input.classList.add("field");
+				let label = document.createElement("LABEL");
+				label.classList.add("label");
+				label.innerHTML = "Cantidad a comprar";
+
+				div_control_input.appendChild(inputCantidad);
+				div_input.appendChild(label);
+				div_input.appendChild(div_control_input);
+				divbutton.appendChild(button);
+				precio_articulo.appendChild(text_precio);
+				nombre_articulo.appendChild(text_articulo);
+				descripcion_art_p.appendChild(descripcion_art);
+				div_card_media_content.appendChild(nombre_articulo);
+				div_card_media_content.appendChild(precio_articulo);
+				div_card_media.appendChild(div_card_media_content);
+				div_card_content.appendChild(div_card_media);
+				content.appendChild(descripcion_art_p)
+				div_card_content.appendChild(content);
+				div_card_content.appendChild(div_input);
+				div_card_content.appendChild(divbutton);
+				figure_img.appendChild(img);
+				div_card_img.appendChild(figure_img);
+				div_card.appendChild(div_card_img);
+				div_card.appendChild(div_card_content);
+				div_colum.appendChild(div_card)
+				div_inicio.appendChild(div_colum);
+			})
+			return entre
+		}
+		function crear_carrito_from_json(objJSON) {
+			let div_inicio = document.getElementById("menu");
+			div_inicio.innerHTML = "";
+			let entre = false;
+			objJSON.forEach((item) => {
+				entre = true;
+				let div_colum = document.createElement("div");
+				div_colum.classList.add("column");
+				div_colum.classList.add("is-4-desktop");
+				div_colum.classList.add("is-half-tablet");
+				div_colum.style.cssText = 'background-color: #6f9de6;'
+				let div_card = document.createElement("div");
+				div_card.classList.add("card");
+				div_card.style.cssText = 'background-color: #adc7f1;'
+				let div_card_img = document.createElement("div");
+				div_card_img.classList.add("card-image");
+				let figure_img = document.createElement("figure");
+				figure_img.classList.add("image");
+				figure_img.classList.add("is-128x128");
+				let img = document.createElement("img");
+				foto = item.foto;
+				if (typeof foto !== 'undefined') {
+					img.src = "data:image/jpeg;base64," + foto;
+				} else
+					img.src = "/nofoto.jpg";
+				let div_card_content = document.createElement("div");
+				div_card_content.classList.add("card-content");
+				let div_card_media = document.createElement("div");
+				div_card_media.classList.add("media");
+				let div_card_media_content = document.createElement("div");
+				div_card_media_content.classList.add("media-content");
+				let nombre_articulo = document.createElement("p");
+				nombre_articulo.classList.add("title");
+				nombre_articulo.classList.add("is-4");
+				let text_articulo = document.createTextNode(item.nombre);
+				let precio_articulo = document.createElement("p");
+				precio_articulo.classList.add("subtitle");
+				precio_articulo.classList.add("is-6");
+				let text_precio = document.createTextNode("Precio: $" + item.precio + " mxn.");
+				let content = document.createElement("div");
+				content.classList.add("content");
+				let descripcion_art = document.createTextNode(" Decripción: " + item.descripcion);
+				let descripcion_art_p = document.createElement("p");
+				let cantidad_art = document.createTextNode(" Cantidad: " + item.cantidad);
+				let cantidad_art_p = document.createElement("p");
+				let costo = document.createTextNode(" Costo: $" + parseFloat(item.precio, 10) * parseInt(item.cantidad, 10) + " mxn.");
+				let costo_art_p = document.createElement("p");
+
+				cantidad_art_p.appendChild(cantidad_art);
+				costo_art_p.appendChild(costo);
+				precio_articulo.appendChild(text_precio);
+				nombre_articulo.appendChild(text_articulo);
+				descripcion_art_p.appendChild(descripcion_art);
+				div_card_media_content.appendChild(nombre_articulo);
+				div_card_media_content.appendChild(precio_articulo);
+				div_card_media.appendChild(div_card_media_content);
+				div_card_content.appendChild(div_card_media);
+				content.appendChild(descripcion_art_p);
+				content.appendChild(cantidad_art_p);
+				content.appendChild(costo_art_p);
+				div_card_content.appendChild(content);
+				figure_img.appendChild(img);
+				div_card_img.appendChild(figure_img);
+				div_card.appendChild(div_card_img);
+				div_card.appendChild(div_card_content);
+				div_colum.appendChild(div_card)
+				div_inicio.appendChild(div_colum);
+			})
+			return entre
+		}
+		function consulta_todo() {
+			var cliente = new WSClient("/Servicio/rest/ws");
+			cliente.post("consulta_todo_articulo",
+				{
+				},
+				function (code, result) {
+					if (code == 200) {
+						var resultado_json = JSON.parse(JSON.stringify(result))
+						let entre = crear_articulos_from_json(resultado_json);
+						if (!entre) {
+							let div_inicio = document.getElementById("menu");
+							div_inicio.innerHTML = "No hay articulos aun :c";
+						}
+					}
+					else {
+						let div_inicio = document.getElementById("menu");
+						div_inicio.innerHTML = "No hay articulos aun :c";
+
+					}
+
+				});
+		}
+		function consulta_carrito() {
+			var cliente = new WSClient("/Servicio/rest/ws");
+			cliente.post("consulta_todo_carrito",
+				{
+				},
+				function (code, result) {
+					if (code == 200) {
+						var resultado_json = JSON.parse(JSON.stringify(result))
+						let entre = crear_carrito_from_json(resultado_json);
+						if (!entre) {
+							let div_inicio = document.getElementById("menu");
+							div_inicio.innerHTML = "No hay articulos aun :c";
+						}
+					}
+					else {
+						let div_inicio = document.getElementById("menu");
+						div_inicio.innerHTML = "No hay articulos aun :c";
+						console.log(JSON.parse(JSON.stringify(result)))
+					}
+
+				});
+		}
+		function consulta_articulos() {
+			(async () => {
+
+				const { value: palabra } = await Swal.fire({
+					title: 'Buscar articulos',
+					input: 'text',
+					inputLabel: 'Ingrese la palabra clave para buscar articulos',
+					inputPlaceholder: 'Palabra a buscar'
+				})
+
+				if (palabra) {
+					var cliente = new WSClient("/Servicio/rest/ws");
+					cliente.post("busqueda_articulos",
+						{
+							busqueda: palabra
+						},
+						function (code, result) {
+							if (code == 200) {
+								var resultado_json = JSON.parse(JSON.stringify(result))
+								let entre = crear_articulos_from_json(resultado_json);
+								if (!entre) {
+									let div_inicio = document.getElementById("menu");
+									div_inicio.innerHTML = "No hay articulos aun relacionados con su busqueda:c";
+								}
+							}
+							else
+								alert(JSON.stringify(result));
+						});
+				}
+
+			})()
+
+		}
+
+
+	</script>
+</head>
+
+<body onload="consulta_todo()">
+	<nav class="navbar" style="background-color: #3273dc;" role="navigation" aria-label="main navigation">
+		<div style="background-color: #3273dc;" class="navbar-brand">
+			<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
+
+		<div id="navMenu" style="background-color: #3273dc;" class="navbar-menu">
+			<div class="navbar-end" style="background-color: #3273dc;">
+
+				<a style="background-color: #3273dc;" class="navbar-item has-text-white"
+					onclick="consulta_todo();limpia_pantalla(['alta_articulo','consulta_usuario']);muestra_pantalla(get('menu'));quitarStyle(get('menu'))">
+					<span class="icon"><i class="fas fa-home"></i></span>
+					<span>Inicio</span>
+				</a>
+
+				<a style="background-color: #3273dc;" class="navbar-item has-text-white"
+					onclick="limpia_alta();limpia_pantalla(['alta_articulo','consulta_usuario','menu']);muestra_pantalla(get('alta_articulo'));">
+					<span class="icon"><i class="fas fa-save"></i></span>
+					<span>Captura de artículo</span>
+				</a>
+
+				<a style="background-color: #3273dc;" class="navbar-item has-text-white"
+					onclick="consulta_articulos();limpia_pantalla(['alta_articulo','consulta_usuario']);muestra_pantalla(get('menu'));quitarStyle(get('menu'))">
+					<span class="icon"><i class="fas fa-shopping-bag"></i></span>
+					<span>Compra de artículos</span>
+				</a>
+
+				<a style="background-color: #3273dc;" class="navbar-item has-text-white"
+					onclick="consulta_carrito();limpia_pantalla(['alta_articulo','consulta_usuario']);muestra_pantalla(get('menu'));quitarStyle(get('menu'))">
+					<span class="icon"><i class="fas fa-shopping-cart"></i></span>
+					<span>Carrito de compra</span>
+				</a>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="section">
+			<div id="alta_articulo" style="display:none">
+				<div class="column has-text-centered">
+					<h1 class="title">Captura de artículo</h1><br>
+				</div>
+				<div class="content">
+					<div class="field">
+						<label class="label">Nombre del artículo</label>
+						<div class="control">
+							<input class="input" type="text" id="alta_nombre" placeholder="Nombre del artículo">
+						</div>
+					</div>
+					<div class="field">
+						<label class="label">Descripcion del artículo</label>
+						<div class="control">
+							<input class="input" type="text" id="alta_descripcion"
+								placeholder="Descripcion del artículo">
+						</div>
+					</div>
+					<div class="field">
+						<label class="label">UPC del artículo</label>
+						<div class="control">
+							<input class="input" type="number" id="alta_UPC" placeholder="Codigo UPC del artículo">
+						</div>
+					</div>
+					<div class="field">
+						<label class="label">Precio del artículo</label>
+						<div class="control">
+							<input class="input" type="number" id="alta_precio" placeholder="Precio del artículo">
+						</div>
+					</div>
+					<div class="field">
+						<label class="label">Cantidad en almacen del artículo</label>
+						<div class="control">
+							<input class="input" type="number" id="cantidad_almacen" placeholder="Precio del artículo">
+						</div>
+					</div>
+					<figure class="image is-128x128">
+						<img id="alta_imagen" src="/usuario_sin_foto.png"></img><br>
+					</figure>
+
+					<div class="file">
+						<label class="file-label">
+							<input class="file-input" type="file" onchange="readSingleFile(files,get('alta_imagen'))"
+								multiple="false" accept="image/*">
+							<span class="file-cta">
+								<span class="file-icon">
+									<i class="fas fa-upload"></i>
+								</span>
+								<span class="file-label" id="name_product">
+									Escoger imagen del producto
+								</span>
+							</span>
+						</label>
+						<br /><br />
+					</div>
+					<div class="box has-text-centered">
+						<div class="control">
+							<button onclick="alta()" class="button is-link">Guardar articulo</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="consulta_usuario" style="display:none">
+				<h2>Consulta/Modifica usuario</h2>
+				Email *<br>
+				<input type="email" id="consulta_email" value="" /><br>
+				Nombre *<br>
+				<input type="text" id="consulta_nombre" value="" /><br>
+				Apellido paterno *<br>
+				<input type="text" id="consulta_apellido_paterno" value="" /><br>
+				Apellido materno<br>
+				<input type="text" id="consulta_apellido_materno" value="" /><br>
+				Fecha de nacimiento *<br>
+				<input type="date" id="consulta_fecha_nacimiento" value="" /><br>
+				Teléfono<br>
+				<input type="number" id="consulta_telefono" value="" /><br>
+				Genero<br>
+				<select id="consulta_genero">
+					<option></option>
+					<option>Masculino</option>
+					<option>Femenino</option>
+				</select>
+				<br>
+				<br>
+				<img id="consulta_imagen" width="100px" src="/usuario_sin_foto.png"></img>
+				<input type="file" id="consulta_file" onchange="readSingleFile(files,get('consulta_imagen'))"
+					multiple="false" accept="image/*" style="display:none" /><br>
+				<br>
+				<button type="button" onclick="consulta()" style="width:200px">Consulta</button></br>
+				<div id="consulta_modifica" style="display:none">
+					<button type="button" onclick="modifica()" style="width:200px">Modifica</button></br>
+				</div>
+				<button type="button" onclick="oculta_pantalla(get('consulta_usuario'));
+										oculta(get('consulta_modifica'));
+										oculta(get('consulta_file'));" style="width:200px">Regresa</button></br>
+			</div>
+
+			<div id="borra_usuario" style="display:none">
+				<h2>Borra usuario</h2>
+				Email *<br>
+				<input type="email" id="borra_email" value="" /><br><br>
+				<button type="button" onclick="borra()" style="width:200px">Borra</button></br>
+				<button type="button" onclick="oculta_pantalla(get('borra_usuario'))"
+					style="width:200px">Regresa</button></br>
+			</div>
+
+			<div id="menu" class="columns is-multiline">
+			</div>
+		</div>
+	</div>
+
+
+	<footer class="footer" style="background-color: #3273dc;">
+		<div class="content has-text-centered has-text-white">
+			<p>
+				Pagina desarrollada por Edmundo Josue Sanchez Mendez con base en el framework <strong>Bulma</strong>
+				creado por <a class="has-text-white" href="https://jgthms.com">Jeremy Thomas</a>
+			</p>
+		</div>
+	</footer>
+	<script type="text/javascript">
+		(function () {
+			var burger = document.querySelector('.burger');
+			var nav = document.querySelector('#' + burger.dataset.target);
+
+			burger.addEventListener('click', function () {
+				burger.classList.toggle('is-active');
+				nav.classList.toggle('is-active');
+			});
+		})();
+	</script>
+</body>
+
+</html>
